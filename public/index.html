@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-        <div class="loginForm">
+        <div class="loginForm input-group mb-3">
             <form onsubmit="handleSubmit(event)">
                 <h1> UserDetails </h1>
                 <!-- <label for="username">UserName</label> -->
@@ -23,12 +23,12 @@
         <div class="groceryList">
           <h1>Grocery List</h1>
           <div class="listForm">
-            <form onsubmit="addItem(event)">
+            <form id = "addItemForm" onsubmit="addItem(event)">
               <input type="text" placeholder="Enter the item to be added" required />
-              <h7 class="remainingItems"></h7>
               <button type="submit" class="btn btn-primary">Add Item</button>
             </form>
           </div>
+          <h7 class="remainingItems"></h7>
           <div class="displayItems">
               
           </div>

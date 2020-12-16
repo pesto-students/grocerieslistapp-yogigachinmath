@@ -12,7 +12,7 @@ function handleSubmit(event) {
     displayItems();
 
     document.querySelector('.loginForm').style.display = 'none';
-    document.querySelector('.groceryList').style.display = 'flex';
+    document.querySelector('.groceryList').style.display = 'inline';
     
 }
 
@@ -35,6 +35,7 @@ function addItem(event) {
         storeData(userData);
         displayItems();
         noOfItemsRemaining();
+        document.getElementById("addItemForm").reset();
     } else {
         alert('Only five items can be added');
     }
@@ -46,7 +47,7 @@ function displayItems() {
     itemsData = '';
     // <button type="submit" onclick = "editItem(event)" class="btn btn-primary ${index}">Edit Item</button>
     items.forEach((item,index) => {
-        itemsData += `<div> 
+        itemsData += `<div class = "itemContainer"> 
                         <div class = "itemName">
                         <h2>
                        <span class = "hiddenSpan"><input type = "text"  onchange = "handleChange(event)" data-index = "${index}" class = "hiddeninput ${index}" value = ${item} ></span>
@@ -110,7 +111,7 @@ function createNewUser(username) {
 function noOfItemsRemaining() {
     let userData = fetchData();
     let noOfItems = userData[currentUser].length;
-    document.querySelector('.remainingItems').innerHTML = noOfItems;
+    document.querySelector('.remainingItems').innerHTML = 5 - noOfItems + " Items can be Added  ";
 }
 
 function storeData(userData) {
