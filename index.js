@@ -8,23 +8,20 @@ function handleSubmit(event) {
     
     createNewUser(username);
     noOfItemsRemaining();
-    removeUsers(userData); // to remove the users if greater then 3.
+    removeUsers(); // to remove the users if greater then 3.
     displayItems();
 
     document.querySelector('.loginForm').style.display = 'none';
     document.querySelector('.groceryList').style.display = 'inline';
-    
 }
 
-function removeUsers(userData) {
+function removeUsers() {
+    let userData = fetchData(username);
     let users = Object.keys(userData);
     if(users.length > 3) {
-        for(let i of users) {
-            if(i > 3) {
-                userData[i] = [];
-            }
-        }
+       delete userData[users[0]];
     }
+    storeData(userData);
 }
 
 function addItem(event) {
@@ -43,7 +40,7 @@ function addItem(event) {
 
 function displayItems() {
     let userData = fetchData();
-    let items = userData[currentUser];
+    let items = userData[currentUser] || [];
     itemsData = '';
     // <button type="submit" onclick = "editItem(event)" class="btn btn-primary ${index}">Edit Item</button>
     items.forEach((item,index) => {
@@ -65,7 +62,6 @@ function handleChange(event) {
     let index = event.target.dataset.index;
     let userData = fetchData();
     let val = event.target.value;
-    console.log(val);
     if(val.trim().length > 0 ) {
         userData[currentUser][index] = event.target.value;
         storeData(userData);
@@ -90,9 +86,12 @@ function fetchData() {
    let userData;
     try{
         userData = JSON.parse(localStorage.getItem('userData'));
-   } catch(error) {
-        userData = new Object();
-       localStorage.setItem('userData', JSON.stringify(userData));
+        if(!userData) {
+            userData = new Object();
+            storeData(userData);
+        }
+    } catch(error) {
+        console.error(error);
    }
    return userData;
 }
@@ -102,9 +101,11 @@ function createNewUser(username) {
         userData = JSON.parse(localStorage.getItem('userData'));
         if(!userData[username]) {
             userData[username] = [];
+            storeData(userData);
         }
    } catch(error) {
     userData[username] = [];
+    storeData(userData);
    }
 }
 
