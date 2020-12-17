@@ -118,3 +118,9 @@ function noOfItemsRemaining() {
 function storeData(userData) {
     localStorage.setItem('userData', JSON.stringify(userData));
 }
+
+function logout() {
+    currentUser = "";
+    document.querySelector('.loginForm').style.display = 'inline';
+    document.querySelector('.groceryList').style.display = 'none';
+}
